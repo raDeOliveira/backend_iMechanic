@@ -22,44 +22,44 @@ namespace backend_iMechanic.Controllers
 
         // GET: api/UserNotes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserNotes>>> GetUserNotes()
+        public async Task<ActionResult<IEnumerable<UserNote>>> GetUser_Notes()
         {
-          if (_context.UserNotes == null)
+          if (_context.User_Notes == null)
           {
               return NotFound();
           }
-            return await _context.UserNotes.ToListAsync();
+            return await _context.User_Notes.ToListAsync();
         }
 
         // GET: api/UserNotes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserNotes>> GetUserNotes(int id)
+        public async Task<ActionResult<UserNote>> GetUserNote(int id)
         {
-          if (_context.UserNotes == null)
+          if (_context.User_Notes == null)
           {
               return NotFound();
           }
-            var userNotes = await _context.UserNotes.FindAsync(id);
+            var userNote = await _context.User_Notes.FindAsync(id);
 
-            if (userNotes == null)
+            if (userNote == null)
             {
                 return NotFound();
             }
 
-            return userNotes;
+            return userNote;
         }
 
         // PUT: api/UserNotes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserNotes(int id, UserNotes userNotes)
+        public async Task<IActionResult> PutUserNote(int id, UserNote userNote)
         {
-            if (id != userNotes.Id)
+            if (id != userNote.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userNotes).State = EntityState.Modified;
+            _context.Entry(userNote).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace backend_iMechanic.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserNotesExists(id))
+                if (!UserNoteExists(id))
                 {
                     return NotFound();
                 }
@@ -83,41 +83,41 @@ namespace backend_iMechanic.Controllers
         // POST: api/UserNotes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserNotes>> PostUserNotes(UserNotes userNotes)
+        public async Task<ActionResult<UserNote>> PostUserNote(UserNote userNote)
         {
-          if (_context.UserNotes == null)
+          if (_context.User_Notes == null)
           {
-              return Problem("Entity set 'iMechanicDbContext.UserNotes'  is null.");
+              return Problem("Entity set 'iMechanicDbContext.User_Notes'  is null.");
           }
-            _context.UserNotes.Add(userNotes);
+            _context.User_Notes.Add(userNote);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserNotes", new { id = userNotes.Id }, userNotes);
+            return CreatedAtAction("GetUserNote", new { id = userNote.Id }, userNote);
         }
 
         // DELETE: api/UserNotes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserNotes(int id)
+        public async Task<IActionResult> DeleteUserNote(int id)
         {
-            if (_context.UserNotes == null)
+            if (_context.User_Notes == null)
             {
                 return NotFound();
             }
-            var userNotes = await _context.UserNotes.FindAsync(id);
-            if (userNotes == null)
+            var userNote = await _context.User_Notes.FindAsync(id);
+            if (userNote == null)
             {
                 return NotFound();
             }
 
-            _context.UserNotes.Remove(userNotes);
+            _context.User_Notes.Remove(userNote);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserNotesExists(int id)
+        private bool UserNoteExists(int id)
         {
-            return (_context.UserNotes?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.User_Notes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

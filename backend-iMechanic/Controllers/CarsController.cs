@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using backend_iMechanic.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using backend_iMechanic.Model;
 
 namespace backend_iMechanic.Controllers
 {
@@ -24,10 +19,10 @@ namespace backend_iMechanic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Car>>> GetCars()
         {
-          if (_context.Cars == null)
-          {
-              return NotFound();
-          }
+            if (_context.Cars == null)
+            {
+                return NotFound();
+            }
             return await _context.Cars.ToListAsync();
         }
 
@@ -35,10 +30,10 @@ namespace backend_iMechanic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(int id)
         {
-          if (_context.Cars == null)
-          {
-              return NotFound();
-          }
+            if (_context.Cars == null)
+            {
+                return NotFound();
+            }
             var car = await _context.Cars.FindAsync(id);
 
             if (car == null)
@@ -85,10 +80,10 @@ namespace backend_iMechanic.Controllers
         [HttpPost]
         public async Task<ActionResult<Car>> PostCar(Car car)
         {
-          if (_context.Cars == null)
-          {
-              return Problem("Entity set 'iMechanicDbContext.Cars'  is null.");
-          }
+            if (_context.Cars == null)
+            {
+                return Problem("Entity set 'iMechanicDbContext.Cars'  is null.");
+            }
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
 
@@ -114,6 +109,70 @@ namespace backend_iMechanic.Controllers
 
             return NoContent();
         }
+
+        // @@info custom methods
+        // get all brands
+        [HttpGet]
+        [Route("/api/brand/all")]
+        public IEnumerable<string> GetBrands()
+        {
+            if (_context.Cars == null)
+            {
+                return (IEnumerable<string>)NotFound();
+            }
+
+            var brands = (from b in _context.Cars
+                          select b.Brand)
+                          .Distinct()
+                          .OrderBy(b => b);
+
+            return brands;
+        }
+
+        // get models brand
+        [HttpGet]
+        [Route("/api/brand/{brand}")]
+        public IQueryable<Car> GetBrand(string brand)
+        {
+            var models = (from b in _context.Cars
+                          where b.Brand == brand
+                          select b);
+
+            if (_context.Cars == null)
+            {
+                return (IQueryable<Car>)NotFound();
+            }
+
+            return models;
+        }
+
+        // get all fuel
+        [HttpGet]
+        [Route("/api/brand/fuel")]
+        public IEnumerable<string> GetAllFuel()
+        {
+            if (_context.Cars == null)
+                return (IEnumerable<string>)NotFound();
+
+            // @@warn "select distinct engine_fuel from cars where engine_fuel not in ('-')"
+            var fuel = (from f in _context.Cars
+                        select f.Engine_Fuel)
+                        .Distinct()
+                        .OrderBy(f => f);
+
+            return fuel;
+        }
+
+        // @@info "select DISTINCT model from cars where brand like '%$brand%' "
+        [HttpGet]
+
+
+        // @@info "select distinct brand from cars where brand like '%$brand%' "
+        [HttpGet]
+
+        // @@info "select distinct `year` from cars where `year` between 1995 and 2018"
+        [HttpGet]
+
 
         private bool CarExists(int id)
         {

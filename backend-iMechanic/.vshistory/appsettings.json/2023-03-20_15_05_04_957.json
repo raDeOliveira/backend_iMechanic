@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "iMechanicDbContext": "Data Source=DESKTOP-0MB18BR\\SQLRO;User ID=sa;Password=Rasosql2022;Initial catalog=MyPersonalProjectDTO"
+  }
+}

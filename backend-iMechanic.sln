@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend_iMechanic", "backend-iMechanic\backend_iMechanic.csproj", "{041B6D7F-2BF2-40E4-BE77-06EE82D09144}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-iMechanic", "backend-iMechanic\backend-iMechanic.csproj", "{ADFBE1B3-EE04-424F-9766-DA04AC8FEA12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{041B6D7F-2BF2-40E4-BE77-06EE82D09144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{041B6D7F-2BF2-40E4-BE77-06EE82D09144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{041B6D7F-2BF2-40E4-BE77-06EE82D09144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{041B6D7F-2BF2-40E4-BE77-06EE82D09144}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADFBE1B3-EE04-424F-9766-DA04AC8FEA12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADFBE1B3-EE04-424F-9766-DA04AC8FEA12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADFBE1B3-EE04-424F-9766-DA04AC8FEA12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADFBE1B3-EE04-424F-9766-DA04AC8FEA12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C2E348ED-E5B8-4EB6-9CDE-3E10FBECDBC7}
+		SolutionGuid = {0DF65FE1-59C5-4214-B338-D437DA7098B9}
 	EndGlobalSection
 EndGlobal

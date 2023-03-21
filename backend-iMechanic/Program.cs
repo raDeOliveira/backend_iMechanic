@@ -3,29 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// MS SQL connection string
-var sqlConnectionString = builder.Configuration.GetConnectionString("iMechanicDbContext");
-//builder.Services.AddDbContext<iMechanicDbContext>(options => options.UseSqlServer(sqlConnectionString));
-
-// MySQL connection string
-builder.Services.AddDbContext<iMechanicDbContext>(options => options.UseMySQL(sqlConnectionString));
-
-
-
-//builder.Services.AddAutoMapper(typeof(MapperConfig));
+// Add services to the container.
+var connString = builder.Configuration.GetConnectionString("iMechanicDbContext");
+builder.Services.AddDbContext<iMechanicDbContext>(options => options.UseSqlServer(connString));
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// add CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Cors",
+    options.AddPolicy("AllowAll",
         b => b.AllowAnyMethod()
-        .AllowAnyOrigin()
-        .AllowAnyMethod());
+        .AllowAnyHeader()
+        .AllowAnyOrigin());
 });
 
 var app = builder.Build();
@@ -39,7 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("Cors");
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

@@ -191,7 +191,7 @@ namespace backend_iMechanic.Controllers
         // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
         [HttpGet]
         [Route("/api/car/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
+        public List<string> GetSelectedCar(string brand, string model, string fuel)
         {
             //if (_context.Cars == null)
             //{
@@ -204,7 +204,7 @@ namespace backend_iMechanic.Controllers
                        .Distinct()
                        .OrderBy(c => c);
 
-            return car;
+            return (List<string>)car;
         }
 
 

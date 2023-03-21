@@ -163,14 +163,12 @@ namespace backend_iMechanic.Controllers
             //             .Distinct()
             //             .OrderBy(y => y);
 
-            var years = _context.Database
-                .SqlQuery<string>($"select distinct year from cars where year between '1995' and '2018'")
-                .ToList();
+            var years = _context.Database.SqlQuery<string>($"select distinct year from cars where year between '1995' and '2018'").ToList();
 
             return years;
         }
 
-        // get all FUELS
+        // get all fuel
         [HttpGet]
         [Route("/api/fuels")]
         public IEnumerable<string> GetAllFuel()
@@ -187,25 +185,11 @@ namespace backend_iMechanic.Controllers
             return fuels;
         }
 
-        // get SELECTED CAR
-        // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
+
+        // @@info "select distinct brand from cars where brand like '%$brand%' "
         [HttpGet]
-        [Route("/api/car/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
-        {
-            //if (_context.Cars == null)
-            //{
-            //    return (IEnumerable<string>)NotFound();
-            //}
 
-            var car = (from c in _context.Cars
-                       where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c)
-                       .Distinct()
-                       .OrderBy(c => c);
 
-            return car;
-        }
 
 
         private bool CarExists(int id)

@@ -113,7 +113,7 @@ namespace backend_iMechanic.Controllers
         // @@info CUSTOM METHODS
         // get all DISTINCT BRANDS
         [HttpGet]
-        [Route("/api/brands")]
+        [Route("/api/brand/all")]
         public IEnumerable<string> GetBrands()
         {
             if (_context.Cars == null)
@@ -129,9 +129,43 @@ namespace backend_iMechanic.Controllers
             return brands;
         }
 
-        // @@info get all DISTINCT MODELS from brand
+        // get models brand
         [HttpGet]
-        [Route("/api/models/{brand}")]
+        [Route("/api/brand/{brand}")]
+        public IQueryable<Car> GetBrand(string brand)
+        {
+            var models = (from b in _context.Cars
+                          where b.Brand == brand
+                          select b);
+
+            if (_context.Cars == null)
+            {
+                return (IQueryable<Car>)NotFound();
+            }
+
+            return models;
+        }
+
+        // get all fuel
+        [HttpGet]
+        [Route("/api/brand/fuel")]
+        public IEnumerable<string> GetAllFuel()
+        {
+            if (_context.Cars == null)
+                return (IEnumerable<string>)NotFound();
+
+            // @@warn "select distinct engine_fuel from cars where engine_fuel not in ('-')"
+            var fuels = (from f in _context.Cars
+                         select f.Engine_Fuel)
+                        .Distinct()
+                        .OrderBy(f => f);
+
+            return fuels;
+        }
+
+        // @@info "select DISTINCT model from cars where brand like '%$brand%' "
+        [HttpGet]
+        [Route("/api/model")]
         public IEnumerable<string> GetModels(string brand)
         {
             if (_context.Cars == null)
@@ -147,65 +181,12 @@ namespace backend_iMechanic.Controllers
             return models;
         }
 
-        // @@info get all DISTINCT YEARS between 1995 and 2018"
+
+        // @@info "select distinct brand from cars where brand like '%$brand%' "
         [HttpGet]
-        [Route("/api/years")]
-        public IEnumerable<string> GetYears()
-        {
-            if (_context.Cars == null)
-            {
-                return (IEnumerable<string>)NotFound();
-            }
 
-            //var years = (from y in _context.Cars
-            //             where y.Year >= 1995 && y.Year <= 2018
-            //             select y.Year)
-            //             .Distinct()
-            //             .OrderBy(y => y);
-
-            var years = _context.Database
-                .SqlQuery<string>($"select distinct year from cars where year between '1995' and '2018'")
-                .ToList();
-
-            return years;
-        }
-
-        // get all FUELS
+        // @@info "select distinct `year` from cars where `year` between 1995 and 2018"
         [HttpGet]
-        [Route("/api/fuels")]
-        public IEnumerable<string> GetAllFuel()
-        {
-            if (_context.Cars == null)
-                return (IEnumerable<string>)NotFound();
-
-            // @@warn "select distinct engine_fuel from cars where engine_fuel not in ('-')"
-            var fuels = (from f in _context.Cars
-                         select f.Engine_Fuel)
-                        .Distinct()
-                        .OrderBy(f => f);
-
-            return fuels;
-        }
-
-        // get SELECTED CAR
-        // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
-        [HttpGet]
-        [Route("/api/car/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
-        {
-            //if (_context.Cars == null)
-            //{
-            //    return (IEnumerable<string>)NotFound();
-            //}
-
-            var car = (from c in _context.Cars
-                       where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c)
-                       .Distinct()
-                       .OrderBy(c => c);
-
-            return car;
-        }
 
 
         private bool CarExists(int id)

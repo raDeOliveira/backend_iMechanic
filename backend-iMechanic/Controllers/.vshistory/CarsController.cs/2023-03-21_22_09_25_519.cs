@@ -190,19 +190,15 @@ namespace backend_iMechanic.Controllers
         // get SELECTED CAR
         // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
         [HttpGet]
-        [Route("/api/car/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
+        [Route("/api/car/{brand}/{model}")]
+        public async Task<ActionResult<Car>> GetSelectedCar(int id)
         {
-            //if (_context.Cars == null)
-            //{
-            //    return (IEnumerable<string>)NotFound();
-            //}
-
+            if (_context.Cars == null)
+            {
+                return NotFound();
+            }
             var car = (from c in _context.Cars
-                       where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c)
-                       .Distinct()
-                       .OrderBy(c => c);
+                       where c.Brand == brand and model like '%$model%' and engine_fuel like '%$fuel%')
 
             return car;
         }

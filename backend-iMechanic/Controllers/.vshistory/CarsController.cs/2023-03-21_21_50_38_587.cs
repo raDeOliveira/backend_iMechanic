@@ -129,7 +129,7 @@ namespace backend_iMechanic.Controllers
             return brands;
         }
 
-        // @@info get all DISTINCT MODELS from brand
+        // @@info "select DISTINCT model from cars where brand like '%$brand%' "
         [HttpGet]
         [Route("/api/models/{brand}")]
         public IEnumerable<string> GetModels(string brand)
@@ -147,32 +147,48 @@ namespace backend_iMechanic.Controllers
             return models;
         }
 
-        // @@info get all DISTINCT YEARS between 1995 and 2018"
+        // @@info "select distinct `year` from cars where `year` between 1995 and 2018"
         [HttpGet]
         [Route("/api/years")]
-        public IEnumerable<string> GetYears()
+        public string GetYears()
         {
-            if (_context.Cars == null)
-            {
-                return (IEnumerable<string>)NotFound();
-            }
-
+            //if (_context.Cars == null)
+            //{
+            //    return (IEnumerable<string>)NotFound();
+            //}
             //var years = (from y in _context.Cars
-            //             where y.Year >= 1995 && y.Year <= 2018
+            //             where Convert.ToInt32(y.Year) >= 1995 && Convert.ToInt32(y.Year) <= 2018
             //             select y.Year)
             //             .Distinct()
             //             .OrderBy(y => y);
 
             var years = _context.Database
-                .SqlQuery<string>($"select distinct year from cars where year between '1995' and '2018'")
-                .ToList();
+                .ExecuteSqlRaw("select distinct 'year' from cars where 'year' between '1995' and '2018'")
+                .ToString();
 
             return years;
         }
 
-        // get all FUELS
+        // get models brand
         [HttpGet]
-        [Route("/api/fuels")]
+        [Route("/api/brand/{brand}")]
+        public IQueryable<Car> GetBrand(string brand)
+        {
+            var models = (from b in _context.Cars
+                          where b.Brand == brand
+                          select b);
+
+            if (_context.Cars == null)
+            {
+                return (IQueryable<Car>)NotFound();
+            }
+
+            return models;
+        }
+
+        // get all fuel
+        [HttpGet]
+        [Route("/api/brand/fuel")]
         public IEnumerable<string> GetAllFuel()
         {
             if (_context.Cars == null)
@@ -187,25 +203,11 @@ namespace backend_iMechanic.Controllers
             return fuels;
         }
 
-        // get SELECTED CAR
-        // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
+
+        // @@info "select distinct brand from cars where brand like '%$brand%' "
         [HttpGet]
-        [Route("/api/car/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
-        {
-            //if (_context.Cars == null)
-            //{
-            //    return (IEnumerable<string>)NotFound();
-            //}
 
-            var car = (from c in _context.Cars
-                       where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c)
-                       .Distinct()
-                       .OrderBy(c => c);
 
-            return car;
-        }
 
 
         private bool CarExists(int id)

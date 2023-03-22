@@ -185,13 +185,14 @@ namespace backend_iMechanic.Controllers
         }
 
         // get SELECTED CAR
+        // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
         [HttpGet("{brand}/{model}/{fuel}")]
         public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
         {
-            if (_context.Cars == null)
-            {
-                return (IOrderedQueryable<Car>)NotFound();
-            }
+            //if (_context.Cars == null)
+            //{
+            //    return (IEnumerable<string>)NotFound();
+            //}
 
             var car = (from c in _context.Cars
                        where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel

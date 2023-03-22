@@ -146,7 +146,8 @@ namespace backend_iMechanic.Controllers
         }
 
         // @@info get all DISTINCT YEARS between 1995 and 2018"
-        [HttpGet("years")]
+        [HttpGet]
+        [Route("/api/years")]
         public IEnumerable<string> GetYears()
         {
             if (_context.Cars == null)
@@ -160,7 +161,6 @@ namespace backend_iMechanic.Controllers
             //             .Distinct()
             //             .OrderBy(y => y);
 
-
             var years = _context.Database
                 .SqlQuery<string>($"SELECT DISTINCT YEAR FROM CARS WHERE YEAR BETWEEN '1995' AND '2018'")
                 .ToList();
@@ -168,15 +168,16 @@ namespace backend_iMechanic.Controllers
             return years;
         }
 
-        // get all DISTINCT FUELS
-        [HttpGet("fuels")]
+        // get all FUELS
+        [HttpGet]
+        [Route("/api/fuels")]
         public IEnumerable<string> GetAllFuel()
         {
             if (_context.Cars == null)
                 return (IEnumerable<string>)NotFound();
 
+            // @@warn "select distinct engine_fuel from cars where engine_fuel not in ('-')"
             var fuels = (from f in _context.Cars
-                         where f.Engine_Fuel != null
                          select f.Engine_Fuel)
                         .Distinct()
                         .OrderBy(f => f);
@@ -185,13 +186,15 @@ namespace backend_iMechanic.Controllers
         }
 
         // get SELECTED CAR
-        [HttpGet("{brand}/{model}/{fuel}")]
+        // select * from cars where brand = '$brand' and model like '%$model%' and engine_fuel like '%$fuel%'
+        [HttpGet]
+        [Route("/api/car/{brand}/{model}/{fuel}")]
         public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
         {
-            if (_context.Cars == null)
-            {
-                return (IOrderedQueryable<Car>)NotFound();
-            }
+            //if (_context.Cars == null)
+            //{
+            //    return (IEnumerable<string>)NotFound();
+            //}
 
             var car = (from c in _context.Cars
                        where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel

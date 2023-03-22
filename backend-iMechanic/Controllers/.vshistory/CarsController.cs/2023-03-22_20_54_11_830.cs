@@ -170,10 +170,10 @@ namespace backend_iMechanic.Controllers
 
         // get all DISTINCT FUELS
         [HttpGet("fuels")]
-        public IEnumerable<string> GetAllFuel()
+        public IEnumerable<Car> GetAllFuel()
         {
             if (_context.Cars == null)
-                return (IEnumerable<string>)NotFound();
+                return (IEnumerable<Car>)NotFound();
 
             var fuels = (from f in _context.Cars
                          where f.Engine_Fuel != null
@@ -181,7 +181,7 @@ namespace backend_iMechanic.Controllers
                         .Distinct()
                         .OrderBy(f => f);
 
-            return fuels;
+            return (IEnumerable<Car>)fuels;
         }
 
         // get SELECTED CAR

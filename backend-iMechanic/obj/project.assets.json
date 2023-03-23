@@ -11166,19 +11166,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\RUO\\.nuget\\packages\\": {}
+    "C:\\Users\\raOliveira\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
+      "projectUniqueName": "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
       "projectName": "backend-iMechanic",
-      "projectPath": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
-      "packagesPath": "C:\\Users\\RUO\\.nuget\\packages\\",
-      "outputPath": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\obj\\",
+      "projectPath": "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
+      "packagesPath": "C:\\Users\\raOliveira\\.nuget\\packages\\",
+      "outputPath": "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\RUO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\raOliveira\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -11186,7 +11191,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.telerik.com/nuget": {}
       },
       "frameworks": {
         "net6.0": {

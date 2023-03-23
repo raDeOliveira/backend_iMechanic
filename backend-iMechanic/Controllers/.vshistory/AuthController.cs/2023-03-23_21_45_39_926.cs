@@ -11,12 +11,7 @@ namespace backend_iMechanic.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly iMechanicDbContext _context;
-
-        public AuthController(iMechanicDbContext context)
-        {
-            _context = context;
-        }
+        User userInDB = new User();
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] User user)
@@ -26,10 +21,8 @@ namespace backend_iMechanic.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            // check if user exists in DB
-            //var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) && u.Password.Equals(user.Password)).FirstOrDefault();
-            var userExists = _context.Users.Where(u => u.Name.Equals(user.Name)).FirstOrDefault();
-            if (userExists != null)
+            if (user.Name == userInDB.Name)
+            //if (user.Name == "test" && user.Password == "test")
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

@@ -29,6 +29,8 @@ namespace backend_iMechanic.Controllers
             // check if user exists in DB
             //var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) && u.Password.Equals(user.Password)).FirstOrDefault();
             var userExists = _context.Users.Where(u => u.Name.Equals(user.Name)).FirstOrDefault();
+
+
             if (userExists != null)
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));

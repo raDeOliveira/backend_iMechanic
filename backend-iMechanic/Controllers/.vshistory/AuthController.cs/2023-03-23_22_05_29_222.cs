@@ -26,10 +26,14 @@ namespace backend_iMechanic.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            // check if user exists in DB
-            //var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) && u.Password.Equals(user.Password)).FirstOrDefault();
-            var userExists = _context.Users.Where(u => u.Name.Equals(user.Name)).FirstOrDefault();
-            if (userExists != null)
+            // get users from DB
+            UsersController usersController = UsersController();
+            var users = usersController.GetUsers();
+
+            System.Diagnostics.Debug.WriteLine("userInDb", users);
+
+            if (user.Name == "")
+            //if (user.Name == "test" && user.Password == "test")
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

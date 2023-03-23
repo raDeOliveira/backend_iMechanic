@@ -1,4 +1,5 @@
 ﻿using backend_iMechanic.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -111,8 +112,9 @@ namespace backend_iMechanic.Controllers
         }
 
         // @@info CUSTOM METHODS
+        // @@info CUSTOM METHODS
         // get all DISTINCT BRANDS
-        [HttpGet("brands")]
+        [HttpGet("brands"), Authorize]
         public IEnumerable<string> GetBrands()
         {
             if (_context.Cars == null)
@@ -129,7 +131,7 @@ namespace backend_iMechanic.Controllers
         }
 
         // @@info get all DISTINCT MODELS from brand
-        [HttpGet("{brand}")]
+        [HttpGet("models/{brand}")]
         public IEnumerable<string> GetModels(string brand)
         {
             if (_context.Cars == null)
@@ -160,7 +162,6 @@ namespace backend_iMechanic.Controllers
             //             .Distinct()
             //             .OrderBy(y => y);
 
-
             var years = _context.Database
                 .SqlQuery<string>($"SELECT DISTINCT YEAR FROM CARS WHERE YEAR BETWEEN '1995' AND '2018'")
                 .ToList();
@@ -168,7 +169,7 @@ namespace backend_iMechanic.Controllers
             return years;
         }
 
-        // get all DISTINCT FUELS
+        //@@info get all FUELS
         [HttpGet("fuels")]
         public IEnumerable<string> GetAllFuel()
         {
@@ -184,7 +185,7 @@ namespace backend_iMechanic.Controllers
             return fuels;
         }
 
-        // get SELECTED CAR
+        //@@info get SELECTED CAR
         [HttpGet("{brand}/{model}/{fuel}")]
         public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
         {

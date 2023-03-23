@@ -1,0 +1,18 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "iMechanicDbContext": "Server=localhost;Database=cars_db;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;User Id=sa;Password=Rasosql2022"
+  },
+  "JWTSettings": {
+    "securityKey": "CodeMazeSecurityKey",
+    "validIssuer": "CodeMazeAPI",
+    "validAudience": "https://localhost:5011",
+    "expiryInMinutes":  "5"
+  }
+}

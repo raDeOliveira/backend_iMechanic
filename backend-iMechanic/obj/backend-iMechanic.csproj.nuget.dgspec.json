@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {}
+    "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {}
   },
   "projects": {
-    "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {
+    "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
+        "projectUniqueName": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
         "projectName": "backend-iMechanic",
-        "projectPath": "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
-        "packagesPath": "C:\\Users\\raOliveira\\.nuget\\packages\\",
-        "outputPath": "D:\\Personal\\Projects\\My Projects\\iMechanic\\backend-iMechanic\\backend-iMechanic\\obj\\",
+        "projectPath": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
+        "packagesPath": "C:\\Users\\RUO\\.nuget\\packages\\",
+        "outputPath": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\raOliveira\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\RUO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,8 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.telerik.com/nuget": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -48,6 +43,10 @@
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.15, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

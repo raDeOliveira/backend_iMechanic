@@ -29,7 +29,7 @@ namespace backend_iMechanic.Controllers
 
             // check if user exists in DB
             //var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) && u.Password.Equals(user.Password)).FirstOrDefault();
-            var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) | u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
+            var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) | u.Email.Equals(user.Email)).FirstOrDefault();
             if (userExists != null)
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
@@ -60,11 +60,9 @@ namespace backend_iMechanic.Controllers
 
             // add user in DB
             var addUser = _context.Database
-                .ExecuteSqlRaw("INSERT INTO Users (Name, Email, Password) VALUES ({0}, {1}, {2})", user.Name, user.Email, user.Password);
+                .ExecuteSqlRaw("INSERT INTO Users (Name, Email, Password) VALUES ({0}, {1})", user.Name, user.Email, user.Password);
 
-            System.Diagnostics.Debug.WriteLine(addUser);
-
-            return Ok(addUser);
+            return null;
         }
     }
 }

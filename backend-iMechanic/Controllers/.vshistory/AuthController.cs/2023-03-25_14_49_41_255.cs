@@ -1,6 +1,5 @@
 ﻿using backend_iMechanic.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -29,7 +28,7 @@ namespace backend_iMechanic.Controllers
 
             // check if user exists in DB
             //var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) && u.Password.Equals(user.Password)).FirstOrDefault();
-            var userExists = _context.Users.Where(u => u.Name.Equals(user.Name) | u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
+            var userExists = _context.Users.Where(u => u.Name.Equals(user.Name)).FirstOrDefault();
             if (userExists != null)
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
@@ -51,20 +50,16 @@ namespace backend_iMechanic.Controllers
 
         // signup
         [HttpPost("signup")]
-        public IActionResult Signup([FromBody] User user)
+        public async Task<ActionResult<User>> Signup([FromBody] User user)
         {
-            if (user is null)
+            if (_context.Users == null)
             {
-                return BadRequest("Invalid client request");
+                return Problem("Entity set 'iMechanicDbContext.Users'  is null.");
             }
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
 
-            // add user in DB
-            var addUser = _context.Database
-                .ExecuteSqlRaw("INSERT INTO Users (Name, Email, Password) VALUES ({0}, {1}, {2})", user.Name, user.Email, user.Password);
-
-            System.Diagnostics.Debug.WriteLine(addUser);
-
-            return Ok(addUser);
+            return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
     }
 }

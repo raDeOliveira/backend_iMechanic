@@ -44,6 +44,7 @@ namespace backend_iMechanic.Controllers
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
+
                 return Ok(new AuthenticatedResponse { Token = tokenString });
             }
             return Unauthorized();
@@ -60,9 +61,7 @@ namespace backend_iMechanic.Controllers
 
             // add user in DB
             var addUser = _context.Database
-                .ExecuteSqlRaw("INSERT INTO Users (Name, Email, Password) VALUES ({0}, {1}, {2})", user.Name, user.Email, user.Password);
-
-            System.Diagnostics.Debug.WriteLine(addUser);
+                .ExecuteSqlRaw("INSERT INTO USERS (Name, Email, Password) VALUES ({0}, {1}, {2})", user.Name, user.Email, user.Password);
 
             return Ok(addUser);
         }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using backend_iMechanic.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using backend_iMechanic.Model;
 
 namespace backend_iMechanic.Controllers
 {
@@ -24,10 +19,10 @@ namespace backend_iMechanic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserNote>>> GetUser_Notes()
         {
-          if (_context.User_Notes == null)
-          {
-              return NotFound();
-          }
+            if (_context.User_Notes == null)
+            {
+                return NotFound();
+            }
             return await _context.User_Notes.ToListAsync();
         }
 
@@ -35,10 +30,10 @@ namespace backend_iMechanic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserNote>> GetUserNote(int id)
         {
-          if (_context.User_Notes == null)
-          {
-              return NotFound();
-          }
+            if (_context.User_Notes == null)
+            {
+                return NotFound();
+            }
             var userNote = await _context.User_Notes.FindAsync(id);
 
             if (userNote == null)
@@ -85,10 +80,10 @@ namespace backend_iMechanic.Controllers
         [HttpPost]
         public async Task<ActionResult<UserNote>> PostUserNote(UserNote userNote)
         {
-          if (_context.User_Notes == null)
-          {
-              return Problem("Entity set 'iMechanicDbContext.User_Notes'  is null.");
-          }
+            if (_context.User_Notes == null)
+            {
+                return Problem("Entity set 'iMechanicDbContext.User_Notes'  is null.");
+            }
             _context.User_Notes.Add(userNote);
             await _context.SaveChangesAsync();
 
@@ -119,5 +114,24 @@ namespace backend_iMechanic.Controllers
         {
             return (_context.User_Notes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        // @@ info
+        // CUSTOM METHODS
+        // insert USER_NOTES
+        [HttpPost("addNotes")]
+        public IActionResult PostUserNotes([FromBody] UserNote userNote)
+        {
+            if (userNote == null)
+            {
+                return NotFound();
+            }
+
+            var insertUserNote = _context.Database
+                .ExecuteSqlRaw("INSERT INTO USER_NOTES (ID_USER, NOTES, ID_CHOOSEN_CAR) VALUES ({0}, {1}, {2})", userNote.Id_User, userNote.Notes, userNote.Id_Choosen_Car);
+
+            return Ok(insertUserNote);
+        }
+
     }
 }
+

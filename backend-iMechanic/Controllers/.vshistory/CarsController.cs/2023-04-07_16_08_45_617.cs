@@ -205,16 +205,16 @@ namespace backend_iMechanic.Controllers
 
         //@@info get OPTION
         [HttpGet("optionCar/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<string> GetOptionCar(string brand, string model, string fuel)
+        public IOrderedQueryable<Car> GetOptionCar(string brand, string model, string fuel)
         {
             if (_context.Car == null)
             {
-                return (IOrderedQueryable<string>)NotFound();
+                return (IOrderedQueryable<Car>)NotFound();
             }
 
             var car = (from c in _context.Car
                        where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c.Option)
+                       select c)
                        .Distinct()
                        .OrderBy(c => c);
 

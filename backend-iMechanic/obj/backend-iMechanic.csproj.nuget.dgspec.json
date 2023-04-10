@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {}
+    "D:\\Downloads\\My Projects\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {}
   },
   "projects": {
-    "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {
+    "D:\\Downloads\\My Projects\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
+        "projectUniqueName": "D:\\Downloads\\My Projects\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
         "projectName": "backend-iMechanic",
-        "projectPath": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
-        "packagesPath": "C:\\Users\\RUO\\.nuget\\packages\\",
-        "outputPath": "C:\\RUO folder\\RUO Files\\C Sharp API\\iMechanic\\backend_iMechanic\\backend-iMechanic\\obj\\",
+        "projectPath": "D:\\Downloads\\My Projects\\iMechanic\\backend_iMechanic\\backend-iMechanic\\backend-iMechanic.csproj",
+        "packagesPath": "C:\\Users\\raOliveira\\.nuget\\packages\\",
+        "outputPath": "D:\\Downloads\\My Projects\\iMechanic\\backend_iMechanic\\backend-iMechanic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\RUO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\raOliveira\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

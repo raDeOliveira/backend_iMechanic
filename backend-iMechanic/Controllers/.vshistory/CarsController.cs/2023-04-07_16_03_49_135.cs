@@ -186,35 +186,35 @@ namespace backend_iMechanic.Controllers
         }
 
         //@@info get SELECTED CAR
-        [HttpGet("selectedCar/{brand}/{model}/{fuel}/{option}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel, string option)
+        [HttpGet("{brand}/{model}/{fuel}")]
+        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
         {
             if (_context.Car == null)
             {
                 return (IOrderedQueryable<Car>)NotFound();
             }
 
-            var optionCar = (from c in _context.Car
-                             where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel && c.Option == option
-                             select c)
+            var car = (from c in _context.Car
+                       where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
+                       select c)
                        .Distinct()
                        .OrderBy(c => c);
 
-            return optionCar;
+            return car;
         }
 
         //@@info get OPTION
-        [HttpGet("optionCar/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<string> GetOptionCar(string brand, string model, string fuel)
+        [HttpGet("{brand}/{model}/{fuel}")]
+        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
         {
             if (_context.Car == null)
             {
-                return (IOrderedQueryable<string>)NotFound();
+                return (IOrderedQueryable<Car>)NotFound();
             }
 
             var car = (from c in _context.Car
                        where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c.Option)
+                       select c)
                        .Distinct()
                        .OrderBy(c => c);
 

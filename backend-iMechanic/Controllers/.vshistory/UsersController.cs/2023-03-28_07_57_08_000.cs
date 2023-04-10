@@ -1,6 +1,11 @@
-﻿using backend_iMechanic.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using backend_iMechanic.Model;
 
 namespace backend_iMechanic.Controllers
 {
@@ -19,22 +24,22 @@ namespace backend_iMechanic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            if (_context.User == null)
-            {
-                return NotFound();
-            }
-            return await _context.User.ToListAsync();
+          if (_context.Users == null)
+          {
+              return NotFound();
+          }
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            if (_context.User == null)
-            {
-                return NotFound();
-            }
-            var user = await _context.User.FindAsync(id);
+          if (_context.Users == null)
+          {
+              return NotFound();
+          }
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -80,11 +85,11 @@ namespace backend_iMechanic.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            if (_context.User == null)
-            {
-                return Problem("Entity set 'iMechanicDbContext.Users'  is null.");
-            }
-            _context.User.Add(user);
+          if (_context.Users == null)
+          {
+              return Problem("Entity set 'iMechanicDbContext.Users'  is null.");
+          }
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
@@ -94,17 +99,17 @@ namespace backend_iMechanic.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return NotFound();
             }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -112,7 +117,7 @@ namespace backend_iMechanic.Controllers
 
         private bool UserExists(int id)
         {
-            return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

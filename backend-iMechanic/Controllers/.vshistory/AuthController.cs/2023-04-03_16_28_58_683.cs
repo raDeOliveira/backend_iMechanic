@@ -61,7 +61,7 @@ namespace backend_iMechanic.Controllers
 
             // add user in DB
             var addUser = _context.Database
-                .ExecuteSqlRaw("INSERT INTO [USER] (Name, Email, Password) VALUES ({0}, {1}, {2})", user.Name, user.Email, user.Password);
+                .ExecuteSqlRaw("INSERT INTO USERS (Name, Email, Password) VALUES ({0}, {1}, {2})", user.Name, user.Email, user.Password);
 
             return Ok(addUser);
         }

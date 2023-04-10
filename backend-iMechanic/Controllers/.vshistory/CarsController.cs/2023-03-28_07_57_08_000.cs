@@ -1,4 +1,5 @@
 ﻿using backend_iMechanic.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,22 +20,22 @@ namespace backend_iMechanic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Car>>> GetCars()
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return NotFound();
             }
-            return await _context.Car.ToListAsync();
+            return await _context.Cars.ToListAsync();
         }
 
         // GET: api/Cars/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(int id)
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return NotFound();
             }
-            var car = await _context.Car.FindAsync(id);
+            var car = await _context.Cars.FindAsync(id);
 
             if (car == null)
             {
@@ -80,11 +81,11 @@ namespace backend_iMechanic.Controllers
         [HttpPost]
         public async Task<ActionResult<Car>> PostCar(Car car)
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return Problem("Entity set 'iMechanicDbContext.Cars'  is null.");
             }
-            _context.Car.Add(car);
+            _context.Cars.Add(car);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCar", new { id = car.Id }, car);
@@ -94,17 +95,17 @@ namespace backend_iMechanic.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar(int id)
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return NotFound();
             }
-            var car = await _context.Car.FindAsync(id);
+            var car = await _context.Cars.FindAsync(id);
             if (car == null)
             {
                 return NotFound();
             }
 
-            _context.Car.Remove(car);
+            _context.Cars.Remove(car);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -113,16 +114,15 @@ namespace backend_iMechanic.Controllers
         // @@info CUSTOM METHODS
         // @@info CUSTOM METHODS
         // get all DISTINCT BRANDS
-        //[HttpGet("brands"), Authorize]
-        [HttpGet("brands")]
+        [HttpGet("brands"), Authorize]
         public IEnumerable<string> GetBrands()
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return (IEnumerable<string>)NotFound();
             }
 
-            var brands = (from b in _context.Car
+            var brands = (from b in _context.Cars
                           select b.Brand)
                           .Distinct()
                           .OrderBy(b => b);
@@ -134,12 +134,12 @@ namespace backend_iMechanic.Controllers
         [HttpGet("models/{brand}")]
         public IEnumerable<string> GetModels(string brand)
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return (IEnumerable<string>)NotFound();
             }
 
-            var models = (from m in _context.Car
+            var models = (from m in _context.Cars
                           where m.Brand == brand
                           select m.Model)
                           .Distinct()
@@ -151,7 +151,7 @@ namespace backend_iMechanic.Controllers
         [HttpGet("years")]
         public IEnumerable<string> GetYears()
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return (IEnumerable<string>)NotFound();
             }
@@ -163,7 +163,7 @@ namespace backend_iMechanic.Controllers
             //             .OrderBy(y => y);
 
             var years = _context.Database
-                .SqlQuery<string>($"SELECT DISTINCT YEAR FROM CAR WHERE YEAR BETWEEN '1995' AND '2018'")
+                .SqlQuery<string>($"SELECT DISTINCT YEAR FROM CARS WHERE YEAR BETWEEN '1995' AND '2018'")
                 .ToList();
 
             return years;
@@ -173,10 +173,10 @@ namespace backend_iMechanic.Controllers
         [HttpGet("fuels")]
         public IEnumerable<string> GetAllFuel()
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
                 return (IEnumerable<string>)NotFound();
 
-            var fuels = (from f in _context.Car
+            var fuels = (from f in _context.Cars
                          where f.Engine_Fuel != null
                          select f.Engine_Fuel)
                         .Distinct()
@@ -186,35 +186,17 @@ namespace backend_iMechanic.Controllers
         }
 
         //@@info get SELECTED CAR
-        [HttpGet("selectedCar/{brand}/{model}/{fuel}/{option}")]
-        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel, string option)
+        [HttpGet("{brand}/{model}/{fuel}")]
+        public IOrderedQueryable<Car> GetSelectedCar(string brand, string model, string fuel)
         {
-            if (_context.Car == null)
+            if (_context.Cars == null)
             {
                 return (IOrderedQueryable<Car>)NotFound();
             }
 
-            var optionCar = (from c in _context.Car
-                             where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel && c.Option == option
-                             select c)
-                       .Distinct()
-                       .OrderBy(c => c);
-
-            return optionCar;
-        }
-
-        //@@info get OPTION
-        [HttpGet("optionCar/{brand}/{model}/{fuel}")]
-        public IOrderedQueryable<string> GetOptionCar(string brand, string model, string fuel)
-        {
-            if (_context.Car == null)
-            {
-                return (IOrderedQueryable<string>)NotFound();
-            }
-
-            var car = (from c in _context.Car
+            var car = (from c in _context.Cars
                        where c.Brand == brand && c.Model == model && c.Engine_Fuel == fuel
-                       select c.Option)
+                       select c)
                        .Distinct()
                        .OrderBy(c => c);
 
@@ -224,7 +206,7 @@ namespace backend_iMechanic.Controllers
 
         private bool CarExists(int id)
         {
-            return (_context.Car?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Cars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
